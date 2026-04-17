@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Campus Lost & Found</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <!-- Login Screen -->
+    <div id="login-screen" class="login-container">
+        <div class="login-card">
+            <div class="login-header">
+                <img src="./KL_University_logo.svg" alt="KL University Logo" class="login-logo"
+                    onerror="this.src=''; this.alt='KL University'; this.className='login-logo-text';">
+                <h2>Lost and Found Portal</h2>
+                <p>KL University Central Portal</p>
+            </div>
+            <form id="login-form">
+                <div class="login-tabs">
+                    <button type="button" class="login-tab active" data-type="student">Student</button>
+                    <button type="button" class="login-tab" data-type="staff">Staff</button>
+                </div>
+                <div class="form-group">
+                    <label for="username">Student ID</label>
+                    <input type="text" id="username" placeholder="Enter your Student ID" required>
+                </div>
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" placeholder="Enter your password" required>
+                </div>
+                <button type="submit" class="submit-btn login-btn">Login</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Main Dashboard (Initially Hidden) -->
+    <div id="dashboard-screen" class="hidden">
+        <nav class="top-nav">
+            <div class="nav-container">
+                <div class="nav-logo">
+                    <img src="./KL_University_logo.svg" alt="KL University Logo" class="dashboard-logo">
+                    <span>KL University Lost & Found</span>
+                </div>
+                <div class="user-profile">
+                    <div class="profile-trigger" id="profileBtn">
+                        <div class="avatar"><span id="avatarInitials">U</span></div>
+                        <div class="user-info">
+                            <span class="user-email" id="userEmailDisplay">user@klh.edu.in</span>
+                            <span class="user-role" id="userRoleDisplay">Student</span>
+                        </div>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <polyline points="6 9 12 15 18 9"></polyline>
+                        </svg>
+                    </div>
+                    <div class="profile-dropdown hidden" id="profileMenu">
+                        <ul>
+                            <li><a href="#" id="menuProfile">My Profile</a></li>
+                            <li><a href="#" id="menuClaims">My Claims</a></li>
+                            <li><a href="#" id="menuReports">My Reports</a></li>
+                            <li class="divider"></li>
+                            <li><a href="#" id="menuLogout" class="text-danger">Logout</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </nav>
+        <header>
+            <div class="header-content">
+                <div>
+                    <h1>Lost and Found Portal</h1>
+                    <p>Report or find lost items on campus</p>
+                </div>
+            </div>
+        </header>
+
+        <main>
+            <section class="form-section">
+                <div class="section-header">
+                    <h2>Report an Item</h2>
+                    <p class="section-subtitle">Fill out the details below to report a lost or found item.</p>
+                </div>
+                <form id="item-form">
+                    <div class="form-group type-group">
+                        <label class="radio-label">
+                            <input type="radio" name="itemType" value="Lost" checked required>
+                            <span class="radio-custom"></span>
+                            Lost Item
+                        </label>
+                        <label class="radio-label">
+                            <input type="radio" name="itemType" value="Found" required>
+                            <span class="radio-custom"></span>
+                            Found Item
+                        </label>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="itemName">Item Name</label>
+                            <input type="text" id="itemName" placeholder="e.g. Blue Water Bottle" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="category">Category</label>
+                            <select id="category" required>
+                                <option value="" disabled selected>Select a category</option>
+                                <option value="Electronics">Electronics</option>
+                                <option value="ID Cards">ID Cards</option>
+                                <option value="Books">Books</option>
+                                <option value="Bags">Bags</option>
+                                <option value="Bottles">Bottles</option>
+                                <option value="Wallets">Wallets</option>
+                                <option value="Keys">Keys</option>
+                                <option value="Clothing">Clothing</option>
+                                <option value="Lab Equipment">Lab Equipment</option>
+                                <option value="Documents">Documents</option>
+                                <option value="Others">Others</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="itemDate">Date (Lost/Found)</label>
+                            <input type="date" id="itemDate" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="location">Location</label>
+                            <input type="text" id="location" placeholder="e.g. Library 2nd Floor" required>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="contact">Contact Information</label>
+                        <input type="text" id="contact" placeholder="Email or Phone number" required>
+                    </div>
+                    <div class="form-group full-width">
+                        <label for="description">Description</label>
+                        <textarea id="description" rows="3" placeholder="Provide any identifying details..."
+                            required></textarea>
+                    </div>
+                    <div class="form-group full-width file-upload-group">
+                        <label for="proof">Proof / Photo <span class="optional-text">(Optional)</span></label>
+                        <input type="file" id="proof" accept="image/*">
+                        <p class="help-text">Upload a clear photo of the item if possible.</p>
+                    </div>
+                    <button type="submit" class="submit-btn" id="addItemBtn">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <line x1="12" y1="5" x2="12" y2="19"></line>
+                            <line x1="5" y1="12" x2="19" y2="12"></line>
+                        </svg>
+                        Add Item
+                    </button>
+                </form>
+            </section>
+
+            <section class="list-section">
+                <div class="section-header">
+                    <h2>Recent Items</h2>
+                    <p class="section-subtitle">Browse recently reported items.</p>
+                </div>
+                <div class="controls">
+                    <div class="search-wrapper">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                            class="search-icon">
+                            <circle cx="11" cy="11" r="8"></circle>
+                            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                        </svg>
+                        <input type="text" id="searchInput" placeholder="Search by name, description, or location...">
+                    </div>
+                    <select id="filterType">
+                        <option value="All">All Statuses</option>
+                        <option value="Lost">Lost</option>
+                        <option value="Found">Found</option>
+                        <option value="Claimed">Claimed</option>
+                        <option value="Recovered">Recovered</option>
+                    </select>
+                    <select id="filterCategory">
+                        <option value="All">All Categories</option>
+                        <option value="Electronics">Electronics</option>
+                        <option value="ID Cards">ID Cards</option>
+                        <option value="Books">Books</option>
+                        <option value="Bags">Bags</option>
+                        <option value="Bottles">Bottles</option>
+                        <option value="Wallets">Wallets</option>
+                        <option value="Keys">Keys</option>
+                        <option value="Clothing">Clothing</option>
+                        <option value="Lab Equipment">Lab Equipment</option>
+                        <option value="Documents">Documents</option>
+                        <option value="Others">Others</option>
+                    </select>
+                </div>
+
+                <div id="item-list" class="item-container">
+                    <!-- Cards will be generated by JS -->
+                </div>
+            </section>
+        </main>
+    </div>
+    <!-- Custom Error Modal -->
+    <div id="error-modal" class="hidden"
+        style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); display: flex; justify-content: center; align-items: center; z-index: 9999;">
+        <div
+            style="background: white; padding: 24px; border-radius: 8px; width: 90%; max-width: 400px; text-align: center; box-shadow: 0 10px 25px rgba(0,0,0,0.2);">
+            <h3 style="margin-bottom: 16px; color: #0f172a; font-size: 1.25rem;">Login Failed</h3>
+            <p id="error-modal-msg" style="margin-bottom: 24px; color: #475569;">Invalid Credentials</p>
+            <button id="close-error-modal"
+                style="background: #2563eb; color: white; border: none; padding: 10px 24px; border-radius: 6px; cursor: pointer; font-weight: 500;">OK</button>
+        </div>
+    </div>
+
+    <!-- Info Modal -->
+    <div id="info-modal" class="hidden"
+        style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); display: flex; justify-content: center; align-items: center; z-index: 10000; padding: 20px;">
+        <div
+            style="background: white; padding: 24px; border-radius: 8px; width: 100%; max-width: 500px; max-height: 80vh; overflow-y: auto; text-align: left; box-shadow: 0 10px 25px rgba(0,0,0,0.2); position: relative;">
+            <button id="close-info-modal"
+                style="position: absolute; top: 16px; right: 16px; background: none; border: none; font-size: 1.5rem; cursor: pointer; color: #64748b;">&times;</button>
+            <h3 id="info-modal-title"
+                style="margin-bottom: 16px; color: #0f172a; font-size: 1.25rem; font-weight: 600; padding-right: 30px;">
+                Title</h3>
+            <div id="info-modal-content" style="color: #475569; font-size: 0.95rem;">
+                <!-- Content -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Image Modal -->
+    <div id="image-modal" class="hidden"
+        style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); display: flex; justify-content: center; align-items: center; z-index: 10000; flex-direction: column;">
+        <button id="close-image-modal"
+            style="position: absolute; top: 20px; right: 30px; background: none; border: none; color: white; font-size: 2rem; cursor: pointer;">&times;</button>
+        <img id="image-modal-content" src="" alt="Full size image"
+            style="max-width: 90%; max-height: 85vh; border-radius: 8px; box-shadow: 0 4px 20px rgba(0,0,0,0.5);">
+    </div>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
