@@ -3,13 +3,13 @@ const cors = require('cors');
 const path = require('path');
 
 const app = express();
-const PORT = 3000;
+const PORT = process.env.PORT || 3000; // ✅ FIXED
 
 // -------------------- MIDDLEWARE --------------------
 app.use(cors());
 app.use(express.json({ limit: '50mb' }));
 
-// Serve static frontend files (HTML, CSS, JS, Images)
+// Serve static frontend files
 app.use(express.static(__dirname));
 
 // -------------------- MOCK DATABASE --------------------
@@ -62,7 +62,7 @@ app.post('/api/login', (req, res) => {
     });
 });
 
-// -------------------- ITEMS (IN-MEMORY) --------------------
+// -------------------- ITEMS --------------------
 let items = [];
 
 // Get all items
@@ -70,7 +70,7 @@ app.get('/api/items', (req, res) => {
     res.json(items);
 });
 
-// Add new item
+// Add item
 app.post('/api/items', (req, res) => {
     const newItem = {
         ...req.body,
@@ -101,7 +101,7 @@ app.put('/api/items/:id/claim', (req, res) => {
     }
 
     if (item.reportedBy === claimedBy) {
-        return res.status(400).json({ success: false, message: 'You cannot claim an item you reported' });
+        return res.status(400).json({ success: false, message: 'You cannot claim your own item' });
     }
 
     item.claimed = true;
@@ -111,7 +111,7 @@ app.put('/api/items/:id/claim', (req, res) => {
     res.json({ success: true, item });
 });
 
-// Mark as recovered
+// Recover item
 app.put('/api/items/:id/recover', (req, res) => {
     const itemId = Number(req.params.id);
     const item = items.find(i => i.id === itemId);
@@ -126,12 +126,12 @@ app.put('/api/items/:id/recover', (req, res) => {
     res.json({ success: true, item });
 });
 
-// -------------------- FRONTEND ROUTE --------------------
+// -------------------- FRONTEND --------------------
 app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, 'index.html'));
 });
 
 // -------------------- START SERVER --------------------
 app.listen(PORT, () => {
-    console.log(`✅ Server running at http://localhost:${PORT}`);
+    console.log(`✅ Server running on port ${PORT}`);
 });
